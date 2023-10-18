@@ -1,0 +1,7 @@
+com\politecnicomalaga\listaarticulos\ListaArticulosController.class
+com\politecnicomalaga\listaarticulos\ListaArticulosEditController.class
+module-info.class
+com\politecnicomalaga\listaarticulos\App.class
+model\SQLConn.class
+com\politecnicomalaga\listaarticulos\ListaArticulosAddController.class
+model\Articulo.class
