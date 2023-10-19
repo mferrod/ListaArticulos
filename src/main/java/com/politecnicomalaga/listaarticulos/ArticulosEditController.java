@@ -75,7 +75,6 @@ public class ArticulosEditController implements Initializable {
     private void modifyButton(ActionEvent event) {
         connex.modifyArticulos(codigoArtField.getText(), descArtField.getText(),
                 fabArtField.getText(), catArtField.getText(), pvpArtField.getText());
-        connex.closeConnectionToDB();
     }
     
 }

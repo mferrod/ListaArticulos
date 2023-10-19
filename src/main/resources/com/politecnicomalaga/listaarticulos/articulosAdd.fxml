@@ -8,8 +8,8 @@
 
 <AnchorPane id="AnchorPane" prefHeight="401.0" prefWidth="438.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.politecnicomalaga.listaarticulos.ArticulosAddController">
    <children>
-      <Button fx:id="backButton" layoutX="200.0" layoutY="338.0" mnemonicParsing="false" onAction="#backButton" text="Atrás" />
-      <Button fx:id="insertDataBtn" layoutX="175.0" layoutY="290.0" mnemonicParsing="false" onAction="#insertData" text="Insertar Datos" />
+      <Button fx:id="backButton" layoutX="192.0" layoutY="339.0" mnemonicParsing="false" onAction="#backButton" text="Cancelar" />
+      <Button fx:id="insertDataBtn" layoutX="190.0" layoutY="288.0" mnemonicParsing="false" onAction="#insertData" text="Aceptar" />
       <TextField fx:id="descArtField" layoutX="144.0" layoutY="143.0" promptText="Descripcion" />
       <TextField fx:id="fabArtField" layoutX="145.0" layoutY="175.0" promptText="Fabricante" />
       <TextField fx:id="catArtField" layoutX="145.0" layoutY="207.0" promptText="Categoria" />

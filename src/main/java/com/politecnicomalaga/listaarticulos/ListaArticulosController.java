@@ -140,7 +140,12 @@ public class ListaArticulosController implements Initializable {
 
     @FXML
     private void addBtnFnc(ActionEvent event) throws IOException {
-        App.setRoot("articulosAdd");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("articulosAdd.fxml"));
+        root = loader.load();
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
@@ -172,7 +177,7 @@ public class ListaArticulosController implements Initializable {
                 listaObservable.get(index2).getFabricanteArt(),
                 listaObservable.get(index2).getCatArt(),
                 String.valueOf(listaObservable.get(index2).getPrecioArt())
-        ); //--> El fallo está aquí
+        ); //--> El fallo está aquígi
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
