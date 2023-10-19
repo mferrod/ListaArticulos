@@ -6,19 +6,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.politecnicomalaga.listaarticulos.ListaArticulosEditController">
+<AnchorPane id="AnchorPane" prefHeight="401.0" prefWidth="438.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.politecnicomalaga.listaarticulos.ArticulosAddController">
    <children>
       <Button fx:id="backButton" layoutX="200.0" layoutY="338.0" mnemonicParsing="false" onAction="#backButton" text="Atrás" />
-      <Button fx:id="modifyDataBtn" layoutX="175.0" layoutY="290.0" mnemonicParsing="false" onAction="#modifyButton" text="Modificar Datos" />
+      <Button fx:id="insertDataBtn" layoutX="175.0" layoutY="290.0" mnemonicParsing="false" onAction="#insertData" text="Insertar Datos" />
       <TextField fx:id="descArtField" layoutX="144.0" layoutY="143.0" promptText="Descripcion" />
       <TextField fx:id="fabArtField" layoutX="145.0" layoutY="175.0" promptText="Fabricante" />
       <TextField fx:id="catArtField" layoutX="145.0" layoutY="207.0" promptText="Categoria" />
       <TextField fx:id="pvpArtField" layoutX="144.0" layoutY="240.0" promptText="PVP" />
-      <Label layoutX="126.0" layoutY="57.0" text="MODIFICAR DATOS">
+      <Label layoutX="126.0" layoutY="57.0" text="INSERTAR DATOS">
          <font>
             <Font name="System Bold" size="23.0" />
          </font>
       </Label>
-      <TextField fx:id="codigoArtField" layoutX="144.0" layoutY="109.0" promptText="Código" />
    </children>
 </AnchorPane>

@@ -24,7 +24,7 @@ import model.SQLConn;
  *
  * @author Mariano
  */
-public class ListaArticulosEditController implements Initializable {
+public class ArticulosEditController implements Initializable {
 
     @FXML
     private Button backButton;
@@ -39,7 +39,7 @@ public class ListaArticulosEditController implements Initializable {
     @FXML
     private TextField pvpArtField;
     @FXML
-    private TextField codArtField;
+    private TextField codigoArtField;
     
     private SQLConn connex = new SQLConn();
     private Parent root;
@@ -53,8 +53,12 @@ public class ListaArticulosEditController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     }    
     
-    public void setData(String codigo){
-        this.codArtField.setText("hola");
+    public void setData(String cod, String desc, String fab, String cat, String pvp){
+        codigoArtField.setText(cod);
+        descArtField.setText(desc);
+        catArtField.setText(cat);
+        fabArtField.setText(fab);
+        pvpArtField.setText(pvp);
     }
     
     @FXML
@@ -69,7 +73,7 @@ public class ListaArticulosEditController implements Initializable {
 
     @FXML
     private void modifyButton(ActionEvent event) {
-        connex.modifyArticulos(codArtField.getText(), descArtField.getText(),
+        connex.modifyArticulos(codigoArtField.getText(), descArtField.getText(),
                 fabArtField.getText(), catArtField.getText(), pvpArtField.getText());
         connex.closeConnectionToDB();
     }

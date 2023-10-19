@@ -140,12 +140,12 @@ public class ListaArticulosController implements Initializable {
 
     @FXML
     private void addBtnFnc(ActionEvent event) throws IOException {
-        App.setRoot("listaArticulosAdd");
+        App.setRoot("articulosAdd");
     }
 
     @FXML
-    private void remBtnFnc(ActionEvent event) throws IOException {
-                TablePosition pos = (TablePosition) tabla.getSelectionModel().getSelectedCells().get(0);
+    private void remBtnFnc(ActionEvent event) {
+        TablePosition pos = (TablePosition) tabla.getSelectionModel().getSelectedCells().get(0);
         int index = pos.getRow();
         String selected = tabla.getItems().get(index).getCodigoArt();
         if (Integer.parseInt(selected) >= 0) {
@@ -162,17 +162,20 @@ public class ListaArticulosController implements Initializable {
 
     @FXML
     private void modBtnFnc(ActionEvent event) throws IOException {
-                TablePosition pos2 = (TablePosition) tabla.getSelectionModel().getSelectedCells().get(0);
+        TablePosition pos2 = (TablePosition) tabla.getSelectionModel().getSelectedCells().get(0);
         int index2 = pos2.getRow();
-        String cod = listaObservable.get(index2).getCodigoArt();
-        System.out.println(cod);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("listaArticulosEdit.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("articulosEdit.fxml"));
         root = loader.load();
-        ListaArticulosEditController laec = loader.getController();
-        laec.setData(cod);
-        //stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        //scene = new Scene(root);
-        //stage.setScene(scene);
-        //stage.show();
+        ArticulosEditController laec = loader.getController();
+        laec.setData(listaObservable.get(index2).getCodigoArt(),
+                listaObservable.get(index2).getDescArt(),
+                listaObservable.get(index2).getFabricanteArt(),
+                listaObservable.get(index2).getCatArt(),
+                String.valueOf(listaObservable.get(index2).getPrecioArt())
+        ); //--> El fallo está aquí
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }

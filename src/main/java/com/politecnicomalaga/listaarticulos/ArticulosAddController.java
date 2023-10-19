@@ -19,7 +19,7 @@ import model.SQLConn;
  *
  * @author Mariano
  */
-public class ListaArticulosAddController implements Initializable {
+public class ArticulosAddController implements Initializable {
 
     @FXML
     private Button backButton;
