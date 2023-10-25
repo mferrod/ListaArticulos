@@ -1,7 +1,11 @@
+listaclientes\ClientesAddController.class
+listaclientes\ListaClientesController.class
+com\politecnicomalaga\listaarticulos\ArticulosAddController.class
 com\politecnicomalaga\listaarticulos\ListaArticulosController.class
 module-info.class
 com\politecnicomalaga\listaarticulos\App.class
+model\Cliente.class
 model\SQLConn.class
 com\politecnicomalaga\listaarticulos\ArticulosEditController.class
-com\politecnicomalaga\listaarticulos\ArticulosAddController.class
+listaclientes\ClientesEditController.class
 model\Articulo.class

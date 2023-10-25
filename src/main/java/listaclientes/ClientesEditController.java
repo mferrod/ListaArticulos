@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package com.politecnicomalaga.listaarticulos;
+package listaclientes;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,46 +27,48 @@ import model.SQLConn;
  *
  * @author Mariano
  */
-public class ArticulosEditController implements Initializable {
+public class ClientesEditController implements Initializable {
 
     @FXML
     private Button backButton;
     @FXML
     private Button modifyDataBtn;
+
     @FXML
-    private TextField descArtField;
+    private TextField nomField;
     @FXML
-    private TextField fabArtField;
+    private TextField ape1Field;
     @FXML
-    private TextField catArtField;
+    private TextField ape2Field;
     @FXML
-    private TextField pvpArtField;
+    private TextField telefonoField;
     @FXML
-    private TextField codigoArtField;
-    
-    private SQLConn connex = new SQLConn();
+    private TextField dniField;
     private Parent root;
     private Stage stage;
     private Scene scene;
-    
+    private SQLConn connex = new SQLConn();
+    private String idcli;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    }    
-    
-    public void setData(String cod, String desc, String fab, String cat, String pvp){
-        codigoArtField.setText(cod);
-        descArtField.setText(desc);
-        catArtField.setText(cat);
-        fabArtField.setText(fab);
-        pvpArtField.setText(pvp);
+        // TODO
     }
     
+    public void setData(String dni, String nombre, String ape1, String ape2, String telef, String idcl){
+        dniField.setText(dni);
+        nomField.setText(nombre);
+        ape1Field.setText(ape1);
+        ape2Field.setText(ape2);
+        telefonoField.setText(telef);
+        idcli = idcl;
+    }
     @FXML
     private void backButton(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("listaArticulos.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("listaClientes.fxml"));
         root = loader.load();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -78,13 +80,14 @@ public class ArticulosEditController implements Initializable {
     private void modifyButton(ActionEvent event) throws IOException {
             Alert alertaConf = new Alert(Alert.AlertType.CONFIRMATION);
             alertaConf.setHeaderText(null);
-            alertaConf.setContentText("¿Estás seguro que quieres modificar este artículo?");
+            alertaConf.setContentText("¿Estás seguro que quieres modificar este cliente?");
             Optional<ButtonType> action = alertaConf.showAndWait();
             if (action.get() == ButtonType.OK) {
-                connex.modifyArticulos(codigoArtField.getText(), descArtField.getText(),
-                fabArtField.getText(), catArtField.getText(), pvpArtField.getText());
+                connex.modifyCliente(dniField.getText(), nomField.getText(),
+                ape1Field.getText(), ape2Field.getText(), telefonoField.getText(), idcli);
                 backButton(event);
             } else 
                 System.out.println("ACCIÓN DENEGADA");
     }
+    
 }

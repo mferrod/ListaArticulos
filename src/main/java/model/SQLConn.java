@@ -47,13 +47,13 @@ public class SQLConn {
             Logger.getLogger(SQLConn.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public int getCountRowsArticulos() {
+    public int getCountRows(String tabla) {
         int r;
         
         r = 0;
         try {
             st = conn.createStatement();
-            rs = st.executeQuery("SELECT COUNT(*) as total FROM articulos");
+            rs = st.executeQuery("SELECT COUNT(*) as total FROM " + tabla);
             while (rs.next()) r = rs.getInt("total");
             rs.close();
             st.close();
@@ -63,6 +63,7 @@ public class SQLConn {
         return (r);
     }
     public ArrayList<String[]> getArticulos() {
+        this.clearArrayList();
         try {
             st = conn.createStatement();
             rs = st.executeQuery("SELECT * FROM articulos");
@@ -115,6 +116,75 @@ public class SQLConn {
             pst.setString(3, categoria);
             pst.setFloat(4, Integer.parseInt(pvp));
             pst.setInt(5, Integer.parseInt(codigo));
+            
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLConn.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public ArrayList<String[]> getClientes() {
+        this.clearArrayList();
+        try {
+            st = conn.createStatement();
+            rs = st.executeQuery("SELECT * FROM clientes");
+            
+            while (rs.next()) {
+                String[] astr = new String[6];
+                
+                astr[0] = String.valueOf(rs.getInt("idcliente"));
+                astr[1] = rs.getString("nombre");
+                astr[2] = rs.getString("apellido1");
+                astr[3] = rs.getString("apellido2");
+                astr[4] = rs.getString("telefono");
+                astr[5] = rs.getString("dni");
+                
+                arrayDevuelvo.add(astr);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLConn.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return (arrayDevuelvo);
+    }
+    private void clearArrayList() {
+        arrayDevuelvo.clear();
+    }
+    public void addCliente(String nombre, String ape1,
+            String ape2, String telef, String dni) {
+        try {
+            pst = conn.prepareStatement("INSERT INTO clientes (nombre, apellido1, apellido2, telefono, dni)"
+                    + " VALUES (?, ?, ?, ?, ?)");
+            pst.setString(1, nombre);
+            pst.setString(2, ape1);
+            pst.setString(3, ape2);
+            pst.setString(4, telef);
+            pst.setString(5, dni);
+            
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLConn.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void removeCliente(String idcl) {
+        try {
+            pst = conn.prepareStatement("DELETE FROM clientes WHERE idcliente=?");
+            pst.setInt(1, Integer.parseInt(idcl));
+            
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLConn.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void modifyCliente(String dni, String nombre, String ape1,
+            String ape2, String telef, String idcli) {
+        try {
+            pst = conn.prepareStatement("UPDATE clientes SET nombre=?, apellido1=?,"
+                    + " apellido2=?, telefono=?, dni=? WHERE idcliente=?");
+            pst.setString(1, nombre);
+            pst.setString(2, ape1);
+            pst.setString(3, ape2);
+            pst.setString(4, telef);
+            pst.setString(5, dni);
+            pst.setInt(6, Integer.parseInt(idcli));
             
             pst.executeUpdate();
         } catch (SQLException ex) {

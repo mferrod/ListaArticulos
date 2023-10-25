@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package com.politecnicomalaga.listaarticulos;
+package listaclientes;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,22 +27,23 @@ import model.SQLConn;
  *
  * @author Mariano
  */
-public class ArticulosAddController implements Initializable {
+public class ClientesAddController implements Initializable {
 
     @FXML
     private Button backButton;
     @FXML
     private Button insertDataBtn;
-    
+    @FXML
+    private TextField nomField;
+    @FXML
+    private TextField ape1Field;
+    @FXML
+    private TextField ape2Field;
+    @FXML
+    private TextField telefField;
+    @FXML
+    private TextField dniField;
     private SQLConn connex = new SQLConn();
-    @FXML
-    private TextField descArtField;
-    @FXML
-    private TextField fabArtField;
-    @FXML
-    private TextField catArtField;
-    @FXML
-    private TextField pvpArtField;
     private Parent root;
     private Scene scene;
     private Stage stage;
@@ -57,7 +58,7 @@ public class ArticulosAddController implements Initializable {
 
     @FXML
     private void backButton(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("listaArticulos.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("listaClientes.fxml"));
         root = loader.load();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -69,11 +70,11 @@ public class ArticulosAddController implements Initializable {
     private void insertData(ActionEvent event) {
         Alert alertaConf = new Alert(Alert.AlertType.CONFIRMATION);
         alertaConf.setHeaderText(null);
-        alertaConf.setContentText("¿Estás seguro que quieres añadir esta información para este artículo?");
+        alertaConf.setContentText("¿Estás seguro que quieres añadir esta información para este cliente?");
         Optional<ButtonType> action = alertaConf.showAndWait();
         if (action.get() == ButtonType.OK)
-        connex.addArticulos(descArtField.getText(), fabArtField.getText(),
-                catArtField.getText(), pvpArtField.getText());
+        connex.addCliente(nomField.getText(), ape1Field.getText(),
+                ape2Field.getText(), telefField.getText(), dniField.getText());
         else
             System.out.println("OPERACIÓN CANCELADA");
     }

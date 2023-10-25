@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package com.politecnicomalaga.listaarticulos;
+package listaclientes;
 
+import com.politecnicomalaga.listaarticulos.App;
+import com.politecnicomalaga.listaarticulos.ArticulosEditController;
 import java.io.IOException;
-import model.Articulo;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
@@ -22,21 +22,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import model.Cliente;
 import model.SQLConn;
 
 /**
@@ -44,9 +39,8 @@ import model.SQLConn;
  *
  * @author Mariano
  */
-public class ListaArticulosController implements Initializable {
-    
-    
+public class ListaClientesController implements Initializable {
+
     @FXML
     private Pane paneButtons;
     @FXML
@@ -56,36 +50,32 @@ public class ListaArticulosController implements Initializable {
     @FXML
     private Button btnModify;
     @FXML
-    private TableView<Articulo> tabla;
-    @FXML
-    private Label labelPrecio;
-    @FXML
-    private Label labelCategoria;
-    @FXML
-    private Label labelCodigo;
-    @FXML
-    private Label labelDesc;
-    @FXML
-    private Label labelFabri;
-    private ObservableList<Articulo> listaObservable = FXCollections.observableArrayList();
-    @FXML
-    private TableColumn<Articulo, String> colcod;
-    @FXML
-    private TableColumn<Articulo, String> coldesc;
-    @FXML
-    private TableColumn<Articulo, String> colfab;
-    @FXML
-    private TableColumn<Articulo, String> colcat;
+    private TableView<Cliente> tabla;
+    private ObservableList<Cliente> listaObservable = FXCollections.observableArrayList();
     private SQLConn connex = new SQLConn();
-    private Parent root;
-    private Scene scene;
+    @FXML
+    private Label labelDni;
+    @FXML
+    private Label labelNombre;
+    @FXML
+    private Label labelApell1;
+    @FXML
+    private Label labelApell2;
+    @FXML
+    private Label labelTelef;
+    @FXML
+    private Button buttonChangeToArts;
+    @FXML
+    private TableColumn<Cliente, String> coldni;
+    @FXML
+    private TableColumn<Cliente, String> colnom;
+    @FXML
+    private TableColumn<Cliente, String> colapell1;
+    @FXML
+    private TableColumn<Cliente, String> colapell2;
     private Stage stage;
-    @FXML
-    private Button btnChangeClientes;
-    @FXML
-    private Pane menuPane;
-    @FXML
-    private SplitMenuButton selectDragger;
+    private Scene scene;
+    private Parent root;
 
     /**
      * Initializes the controller class.
@@ -93,20 +83,20 @@ public class ListaArticulosController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.addDataToList();
-        colcod.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getCodigoArt()));
-        coldesc.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDescArt()));
-        colfab.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getFabricanteArt()));
-        colcat.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getCatArt()));
+        coldni.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDNI()));
+        colnom.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNombre()));
+        colapell1.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getApellido1()));
+        colapell2.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getApellido2()));
         tabla.setItems(listaObservable);
-    }
-    
+    }    
+
     private void addDataToList() {
-        ArrayList<String[]> e = connex.getArticulos();
-        for (int i = 0; i < connex.getCountRows("articulos"); i++)
+        ArrayList<String[]> e = connex.getClientes();
+        for (int i = 0; i < connex.getCountRows("clientes"); i++)
         {
-            Articulo a = new Articulo(e.get(i)[0], e.get(i)[1], e.get(i)[2],
-                    e.get(i)[3], Integer.valueOf(e.get(i)[4]));
-            listaObservable.add(a);
+            Cliente c = new Cliente(Integer.valueOf(e.get(i)[0]), e.get(i)[1], e.get(i)[2],
+                                    e.get(i)[3], e.get(i)[4], e.get(i)[5]);
+            listaObservable.add(c);
         }
     }
     
@@ -130,16 +120,16 @@ public class ListaArticulosController implements Initializable {
             selected = selected.substring(selected.indexOf("$") + 1, selected.length());
             //System.out.println(selected);
         }
-        labelCodigo.setText(s[0]);
-        labelDesc.setText(s[1]);
-        labelFabri.setText(s[2]);
-        labelCategoria.setText(s[3]);
-        labelPrecio.setText(s[4]);
+        labelDni.setText(s[0]);
+        labelNombre.setText(s[1]);
+        labelApell1.setText(s[2]);
+        labelApell2.setText(s[3]);
+        labelTelef.setText(s[4]);
     }
-
+    
     @FXML
     private void addBtnFnc(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("articulosAdd.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("clientesAdd.fxml"));
         root = loader.load();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -151,22 +141,22 @@ public class ListaArticulosController implements Initializable {
     private void remBtnFnc(ActionEvent event) {
         TablePosition pos = (TablePosition) tabla.getSelectionModel().getSelectedCells().get(0);
         int index = pos.getRow();
-        String selected = tabla.getItems().get(index).getCodigoArt();
+        String selected = tabla.getItems().get(index).getIdCliente();
         if (Integer.parseInt(selected) >= 0) {
-            Alert alertaConf = new Alert(AlertType.CONFIRMATION);
+            Alert alertaConf = new Alert(Alert.AlertType.CONFIRMATION);
             alertaConf.setHeaderText(null);
-            alertaConf.setContentText("¿Estás seguro que quieres borrar este artículo?");
+            alertaConf.setContentText("¿Estás seguro que quieres borrar este cliente?");
             Optional<ButtonType> action = alertaConf.showAndWait();
             if (action.get() == ButtonType.OK) {
-                connex.removeArticulos(selected);
+                connex.removeCliente(selected);
                 listaObservable.remove(tabla.getItems().get(index));
             } else 
                 System.out.println("ACCIÓN DENEGADA");
         } else {
-            Alert alerta = new Alert(AlertType.ERROR);
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("ATENCIÓN");
-            alerta.setHeaderText("ARTICULO NO SELECCIONADO");
-            alerta.setContentText("POR FAVOR, SELECCIONE UN ARTICULO DE LA TABLA");
+            alerta.setHeaderText("CLIENTE NO SELECCIONADO");
+            alerta.setContentText("POR FAVOR, SELECCIONE UN CLIENTE DE LA TABLA");
             alerta.showAndWait();
         }
     }
@@ -175,33 +165,29 @@ public class ListaArticulosController implements Initializable {
     private void modBtnFnc(ActionEvent event) throws IOException {
         TablePosition pos2 = (TablePosition) tabla.getSelectionModel().getSelectedCells().get(0);
         int index2 = pos2.getRow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("articulosEdit.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("clientesEdit.fxml"));
         root = loader.load();
-        ArticulosEditController laec = loader.getController();
-        laec.setData(listaObservable.get(index2).getCodigoArt(),
-                listaObservable.get(index2).getDescArt(),
-                listaObservable.get(index2).getFabricanteArt(),
-                listaObservable.get(index2).getCatArt(),
-                String.valueOf(listaObservable.get(index2).getPrecioArt())
-        ); //--> El fallo está aquí
+        ClientesEditController laec = loader.getController();
+        laec.setData(listaObservable.get(index2).getDNI(),
+                listaObservable.get(index2).getNombre(),
+                listaObservable.get(index2).getApellido1(),
+                listaObservable.get(index2).getApellido2(),
+                String.valueOf(listaObservable.get(index2).getTelefono()),
+                listaObservable.get(index2).getIdCliente()
+        );
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-    }
+    }    
 
     @FXML
-    private void changeToClientesBtnFnc(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/listaclientes/listaClientes.fxml"));
+    private void changeToArts(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("listaArticulos.fxml"));
         root = loader.load();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-    }
-
-    @FXML
-    private void draggerAct(ActionEvent event) {
-        selectDragger.getItems().addAll(elements);
     }
 }
